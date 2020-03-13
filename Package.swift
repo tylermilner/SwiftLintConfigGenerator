@@ -9,13 +9,14 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/realm/SwiftLint.git", from: "0.39.0"),
         .package(url: "https://github.com/apple/swift-tools-support-core.git", from: "0.0.1"),
+        .package(url: "https://github.com/jpsim/Yams.git", from: "2.0.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "SwiftLintConfigGenerator",
-            dependencies: ["SwiftLintFramework", "SwiftToolsSupport"]),
+            dependencies: ["SwiftLintFramework", "SwiftToolsSupport", "Yams"]),
         .testTarget(
             name: "SwiftLintConfigGeneratorTests",
             dependencies: ["SwiftLintConfigGenerator"]),

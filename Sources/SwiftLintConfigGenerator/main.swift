@@ -1,6 +1,7 @@
 import SwiftLintFramework
 import TSCBasic
 import TSCUtility
+import Yams
 
 // TODO: Use swift-argument-parser for parsing command line arguments: https://github.com/apple/swift-argument-parser
 
@@ -32,3 +33,12 @@ print("All SwiftLint rules: \(allSwiftLintRules.keys)\n\(allSwiftLintRules.count
 
 let allOptInRules = allSwiftLintRules.filter { $0.value is OptInRule.Type }
 print("All Opt-In rules: \(allOptInRules.keys)\n\(allOptInRules.count) total") // 107 opt in
+
+let optInRuleNames = allOptInRules.keys.map { String(describing: $0) }.sorted()
+let yamlOptions: [String: [String]] = ["opt_in_rules": optInRuleNames]
+print(yamlOptions)
+
+let yamlString = try? Yams.dump(object: yamlOptions)
+print(yamlString ?? "fail")
+
+// TODO: Write YAML string to disk as ".swiftlint.yml"
