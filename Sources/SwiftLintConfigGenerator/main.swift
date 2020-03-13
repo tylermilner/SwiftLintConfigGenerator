@@ -21,12 +21,8 @@ let arguments = Array(CommandLine.arguments.dropFirst())
 do {
     let parseResult = try parser.parse(arguments)
     
-    // TODO: Disabled rules should be treated as an optional argument
-    if let disabledRules: [String] = parseResult.get(disabledRulesArgument) {
-        print("Disabled rules: \(disabledRules)")
-    } else {
-        parser.printUsage(on: stdoutStream)
-    }
+    let disabledRules = parseResult.get(disabledRulesArgument) ?? []
+    print("disabled_rules: \(disabledRules)")
 } catch {
     parser.printUsage(on: stdoutStream)
 }
