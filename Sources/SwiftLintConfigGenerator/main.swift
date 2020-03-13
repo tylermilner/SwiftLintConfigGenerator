@@ -27,6 +27,8 @@ do {
     parser.printUsage(on: stdoutStream)
 }
 
-let allSwiftLintRules = masterRuleList.list.keys
+let allSwiftLintRules = masterRuleList.list
+print("All SwiftLint rules: \(allSwiftLintRules.keys)\n\(allSwiftLintRules.count) total") // 191 total
 
-print("All SwiftLint rules: \(allSwiftLintRules)\n\(allSwiftLintRules.count) total")
+let allOptInRules = allSwiftLintRules.filter { $0.value is OptInRule.Type }
+print("All Opt-In rules: \(allOptInRules.keys)\n\(allOptInRules.count) total") // 107 opt in
