@@ -2,11 +2,12 @@ import SwiftLintFramework
 import TSCBasic
 import TSCUtility
 import Yams
+import Files
 
 // TODO: Use swift-argument-parser for parsing command line arguments: https://github.com/apple/swift-argument-parser
 
 // TODO: Fill in usage/overview details
-let parser = ArgumentParser(usage: "options", overview: "Generates a .swiftlint.yml file")
+let parser = ArgumentParser(usage: "[options]", overview: "Generates a .swiftlint.yml file with all opt-in rules enabled, taking the provided options into consideraiton.")
 
 let disabledRulesArgument: OptionArgument<[String]> = parser.add(option: "--disabled-rules", kind: [String].self, usage: "Specify the rules to disable (e.g. `SwiftLintConfigGenerator --disabled-rules legacy_multiple force_try`)")
 
@@ -40,5 +41,11 @@ print(yamlOptions)
 
 let yamlString = try? Yams.dump(object: yamlOptions)
 print(yamlString ?? "fail")
+guard let yamlStringData = yamlString?.data(using: .utf8) else { fatalError("Failed to convert YAML string into data") }
 
-// TODO: Write YAML string to disk as ".swiftlint.yml"
+do {
+    let savedConfig = try Folder.current.createFile(named: ".swiftlint.yml", contents: yamlStringData)
+    print("Created SwiftLint config at '\(savedConfig.path)'")
+} catch {
+    fatalError(error.localizedDescription)
+}
