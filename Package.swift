@@ -17,9 +17,11 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "SwiftLintConfigGenerator",
-            dependencies: ["SwiftLintFramework", "SwiftToolsSupport", "Yams", "Files"]),
+            dependencies: ["SwiftLintConfigGeneratorCore"]),
+        .target(name: "SwiftLintConfigGeneratorCore",
+                dependencies: ["SwiftLintFramework", "SwiftToolsSupport", "Yams", "Files"]),
         .testTarget(
             name: "SwiftLintConfigGeneratorTests",
-            dependencies: ["SwiftLintConfigGenerator"]),
+            dependencies: ["SwiftLintConfigGeneratorCore"]),
     ]
 )
